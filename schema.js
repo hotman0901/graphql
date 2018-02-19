@@ -3,6 +3,7 @@ import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
 import resolvers from './resolvers';
 
 // 所以這個type 可以定義多個
+// 這必須與mongoose、resolvers 參數的定義要一樣
 const typeDefs =
 `
   type Person {
@@ -12,14 +13,22 @@ const typeDefs =
   }
 
   type Author {
+    id: String
     age: Int
     name: String
-    Books: [String]
+    books: [String]
   }
 
   type Query {
-    author: [Author],
-    person: [Person]
+    getAuthors: [Author],
+    author(id: String!): Author,
+    person: [Person],
+  }
+
+  type Mutation {
+    addAuthor(name: String!, age: Int!, books: [String]!): Author
+    deleteAuthor(id: String!): Author
+    updateAuthor(id: String!, name: String!): Author
   }
 `
 

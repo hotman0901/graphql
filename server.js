@@ -2,7 +2,19 @@ import express from 'express';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import bodyParser from "body-parser";
 import schema from './schema';
+import mongoose from 'mongoose';
 const server = express();
+
+// 連線
+mongoose.connect('mongodb://localhost/graphqlTutorial');
+
+// test for connect
+const connection = mongoose.connection;
+connection.once('open', () =>{
+  console.log('mongoose connect');
+})
+
+
 
 // server.get('/', (req, res) => {
 //   res.json({
